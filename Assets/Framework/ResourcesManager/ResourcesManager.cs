@@ -165,7 +165,7 @@ public class ResourcesManager : SingletonLazyBase<ResourcesManager>
                     resourcesInfo.callback -= callback;
                 else
                 {
-                    if (resourcesInfo.asset is not GameObject or Component)
+                    if (resourcesInfo.asset is not (GameObject or Component))
                         Resources.UnloadAsset(resourcesInfo.asset);
                     _resourcesInfoDic.Remove(key);
                 }
@@ -187,7 +187,7 @@ public class ResourcesManager : SingletonLazyBase<ResourcesManager>
                     resourcesInfo.callback -= callback;
                 else
                 {
-                    if (resourcesInfo.asset is not GameObject or Component)
+                    if (resourcesInfo.asset is not (GameObject or Component))
                         Resources.UnloadAsset(resourcesInfo.asset);
                     _resourcesInfoDic.Remove(key);
                 }
