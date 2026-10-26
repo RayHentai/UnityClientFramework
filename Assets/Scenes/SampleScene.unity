@@ -363,13 +363,14 @@ GameObject:
   - component: {fileID: 1877655263}
   - component: {fileID: 1877655262}
   - component: {fileID: 1877655264}
+  - component: {fileID: 1877655265}
   m_Layer: 0
   m_Name: AddressablesManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1877655262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -404,9 +405,21 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1877655261}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 291d7e639f6d4b848b1c762c6fdabbfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1877655265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1877655261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e25ca40fe26ccb4a9d6eb97540e32e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1900986256
@@ -419,13 +432,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1900986258}
   - component: {fileID: 1900986257}
+  - component: {fileID: 1900986259}
   m_Layer: 0
   m_Name: ResourcesManagerTest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1900986257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -433,7 +447,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1900986256}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e74d5f6ffcc16b6439cb38632f904413, type: 3}
   m_Name: 
@@ -453,6 +467,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1900986259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1900986256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcfe4b6b4f9fc774aaa5e9cb9f010bc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _materialPath: ResTest/TestMaterial
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
