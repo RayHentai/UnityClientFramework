@@ -5,6 +5,7 @@ using System.Reflection;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using TargetManager = AddressablesManager;   // 被测的管理器类名,改名时只改这一行
 
 /// <summary>
 /// AddressablesManager(Ad1)测试,编号对应测试清单
@@ -33,7 +34,7 @@ public class AddressablesManagerTest : MonoBehaviour
     private int _syncFailLogs;
     private int _exceptions;
 
-    private AddressablesManager Mgr => AddressablesManager.Instance;
+    private TargetManager Mgr => TargetManager.Instance;
 
     private void OnEnable()
     {
@@ -462,7 +463,7 @@ public class AddressablesManagerTest : MonoBehaviour
 
     private Dictionary<string, AsyncOperationHandle> HandleDic()
     {
-        FieldInfo field = typeof(AddressablesManager).GetField("_handleDic", BindingFlags.NonPublic | BindingFlags.Instance);
+        FieldInfo field = typeof(TargetManager).GetField("_handleDic", BindingFlags.NonPublic | BindingFlags.Instance);
         return field?.GetValue(Mgr) as Dictionary<string, AsyncOperationHandle>;
     }
 

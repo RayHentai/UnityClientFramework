@@ -20,7 +20,9 @@ MonoBehaviour:
   - m_GUID: 1bfe084d252588d4686ac755f48d7fd9
     m_Address: Red
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - TestA
+    - TestB
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 757db893fc5d46d45945fcd9591d3d1f
     m_Address: Item
@@ -30,7 +32,8 @@ MonoBehaviour:
   - m_GUID: f8fb07b31cb588c4380bb098126401d7
     m_Address: Cube
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - TestA
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 96abf70b646a8cb40a189155089c6036, type: 2}
