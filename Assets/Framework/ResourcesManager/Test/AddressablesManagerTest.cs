@@ -16,7 +16,7 @@ using TargetManager = AddressablesManager;   // 被测的管理器类名,改名�
 /// 下面这些红字是故意制造的,属正常:
 ///   Addressables 自己打的 InvalidKeyException(故意加载不存在的地址、错误的类型)
 ///   管理器自己打的"异步加载失败"和同步 Load 的失败日志(脚本会数条数;同步日志按"在方法 Load 中"匹配)
-/// 读私有字段 _handleDic 用的是反射,字段改名的话这里也要改
+/// 读私有字段 _infoDic 用的是反射,字段改名的话这里也要改
 /// </summary>
 public class AddressablesManagerTest : MonoBehaviour
 {
@@ -461,28 +461,39 @@ public class AddressablesManagerTest : MonoBehaviour
         return name + "_" + typeof(T).Name;   // 和管理器的 GetKey 一致
     }
 
-    private Dictionary<string, AsyncOperationHandle> HandleDic()
+    private IDictionary InfoDic()
     {
-        FieldInfo field = typeof(TargetManager).GetField("_handleDic", BindingFlags.NonPublic | BindingFlags.Instance);
-        return field?.GetValue(Mgr) as Dictionary<string, AsyncOperationHandle>;
+        FieldInfo field = typeof(TargetManager).GetField("_infoDic", BindingFlags.NonPublic | BindingFlags.Instance);
+        return field?.GetValue(Mgr) as IDictionary;
+    }
+
+    // 记录类是管理器里的私有类,用反射读它的 handle、referenceCount 字段
+    private static AsyncOperationHandle HandleOf(object info)
+    {
+        return info == null ? default : (AsyncOperationHandle)info.GetType().GetField("handle").GetValue(info);
+    }
+
+    private static int CountOf(object info)
+    {
+        return info == null ? -1 : (int)info.GetType().GetField("referenceCount").GetValue(info);
     }
 
     private bool HasRecord<T>(string name)
     {
-        Dictionary<string, AsyncOperationHandle> dic = HandleDic();
-        return dic != null && dic.ContainsKey(KeyOf<T>(name));
+        IDictionary dic = InfoDic();
+        return dic != null && dic.Contains(KeyOf<T>(name));
     }
 
     private int RecordCount()
     {
-        Dictionary<string, AsyncOperationHandle> dic = HandleDic();
+        IDictionary dic = InfoDic();
         return dic != null ? dic.Count : -1;
     }
 
     private AsyncOperationHandle GetHandle<T>(string name)
     {
-        Dictionary<string, AsyncOperationHandle> dic = HandleDic();
-        return dic != null && dic.TryGetValue(KeyOf<T>(name), out AsyncOperationHandle handle) ? handle : default;
+        IDictionary dic = InfoDic();
+        return dic != null && dic.Contains(KeyOf<T>(name)) ? HandleOf(dic[KeyOf<T>(name)]) : default;
     }
 
     private bool IsLoading<T>(string name)

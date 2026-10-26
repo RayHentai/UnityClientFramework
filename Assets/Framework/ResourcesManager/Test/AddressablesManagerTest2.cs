@@ -17,7 +17,7 @@ using Object = UnityEngine.Object;
 /// 预期的资源:TestA = {Cube, Red};TestB = {Red};TestA ∩ TestB = {Red}
 /// 结果:[PASS] 普通 log、[FAIL] 红字、[OBSERVE] 黄字(观察项),最后一行是汇总
 /// 下面这些红字是故意制造的,属正常:Addressables 自己的 InvalidKeyException、管理器的"异步加载失败"和 LoadAssets 的失败日志
-/// 读私有字段 _handleDic 用的是反射,字段改名或 key 拼法改了,这里也要改
+/// 读私有字段 _infoDic 用的是反射,字段改名或 key 拼法改了,这里也要改
 /// </summary>
 public class AddressablesManagerAd2Test : MonoBehaviour
 {
@@ -347,28 +347,39 @@ public class AddressablesManagerAd2Test : MonoBehaviour
         return string.Join("_", keys) + "_" + typeof(T).Name + "_" + mode;   // 和管理器的多条件 GetKey 一致
     }
 
-    private Dictionary<string, AsyncOperationHandle> HandleDic()
+    private IDictionary InfoDic()
     {
-        FieldInfo field = typeof(TargetManager).GetField("_handleDic", BindingFlags.NonPublic | BindingFlags.Instance);
-        return field?.GetValue(Mgr) as Dictionary<string, AsyncOperationHandle>;
+        FieldInfo field = typeof(TargetManager).GetField("_infoDic", BindingFlags.NonPublic | BindingFlags.Instance);
+        return field?.GetValue(Mgr) as IDictionary;
+    }
+
+    // 记录类是管理器里的私有类,用反射读它的 handle、referenceCount 字段
+    private static AsyncOperationHandle HandleOf(object info)
+    {
+        return info == null ? default : (AsyncOperationHandle)info.GetType().GetField("handle").GetValue(info);
+    }
+
+    private static int CountOf(object info)
+    {
+        return info == null ? -1 : (int)info.GetType().GetField("referenceCount").GetValue(info);
     }
 
     private bool HasRecord<T>(Addressables.MergeMode mode, params string[] keys)
     {
-        Dictionary<string, AsyncOperationHandle> dic = HandleDic();
-        return dic != null && dic.ContainsKey(KeyOf<T>(mode, keys));
+        IDictionary dic = InfoDic();
+        return dic != null && dic.Contains(KeyOf<T>(mode, keys));
     }
 
     private int RecordCount()
     {
-        Dictionary<string, AsyncOperationHandle> dic = HandleDic();
+        IDictionary dic = InfoDic();
         return dic != null ? dic.Count : -1;
     }
 
     private AsyncOperationHandle GetHandle<T>(Addressables.MergeMode mode, params string[] keys)
     {
-        Dictionary<string, AsyncOperationHandle> dic = HandleDic();
-        return dic != null && dic.TryGetValue(KeyOf<T>(mode, keys), out AsyncOperationHandle handle) ? handle : default;
+        IDictionary dic = InfoDic();
+        return dic != null && dic.Contains(KeyOf<T>(mode, keys)) ? HandleOf(dic[KeyOf<T>(mode, keys)]) : default;
     }
 
     private bool IsLoading<T>(Addressables.MergeMode mode, params string[] keys)
