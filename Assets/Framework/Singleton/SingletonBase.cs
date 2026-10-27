@@ -21,15 +21,15 @@ public abstract class SingletonBase<T> where T : class
                         Type type = typeof(T);
                         ConstructorInfo constructor = type.GetConstructor
                         (
-                            BindingFlags.Instance | BindingFlags.NonPublic, //±íÊ¾³ÉÔ±Ë½ÓĞ·½·¨
-                            null, //±íÊ¾Ã»ÓĞ°ó¶¨¶ÔÏó
-                            Type.EmptyTypes, //±íÊ¾Ã»ÓĞ²ÎÊı
-                            null //±íÊ¾Ã»ÓĞ²ÎÊıĞŞÊÎ·û
+                            BindingFlags.Instance | BindingFlags.NonPublic, //è¡¨ç¤ºæˆå‘˜ç§æœ‰æ–¹æ³•
+                            null, //è¡¨ç¤ºæ²¡æœ‰ç»‘å®šå¯¹è±¡
+                            Type.EmptyTypes, //è¡¨ç¤ºæ²¡æœ‰å‚æ•°
+                            null //è¡¨ç¤ºæ²¡æœ‰å‚æ•°ä¿®é¥°ç¬¦
                         );
                         if (constructor != null)
                             instance = constructor.Invoke(null) as T;
                         else
-                            Debug.LogError("Ã»ÓĞÕÒµ½Ë½ÓĞÎŞ²Î¹¹Ôìº¯Êı");
+                            Debug.LogError("æ²¡æœ‰æ‰¾åˆ°ç§æœ‰æ— å‚æ„é€ å‡½æ•°");
                     }
                 }
             }
